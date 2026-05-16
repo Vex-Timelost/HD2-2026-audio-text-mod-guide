@@ -1,0 +1,1568 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HD2 MOD GUIDE // SUPER EARTH MINISTRY OF SOUND</title>
+<link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=Share+Tech+Mono&family=Barlow+Condensed:ital,wght@0,300;0,400;0,600;0,700;0,900;1,400&display=swap" rel="stylesheet">
+<style>
+/* ═══════════════════════════════════════════
+   CSS VARIABLES & THEME
+═══════════════════════════════════════════ */
+:root {
+  --bg:        #080a10;
+  --bg2:       #0e1118;
+  --bg3:       #141825;
+  --panel:     #111520;
+  --border:    #1e2535;
+  --border2:   #2a3550;
+  --yellow:    #f5c30a;
+  --yellow2:   #e8a800;
+  --red:       #c8351a;
+  --red2:      #a02810;
+  --green:     #3a8c40;
+  --green2:    #2d6e32;
+  --text:      #d6ccb8;
+  --text2:     #8a8070;
+  --text3:     #5a5048;
+  --accent:    #f5c30a;
+  --glow:      rgba(245,195,10,0.15);
+  --glow2:     rgba(245,195,10,0.05);
+  --scanline:  rgba(0,0,0,0.04);
+  --font-head: 'Barlow Condensed', sans-serif;
+  --font-body: 'Rajdhani', sans-serif;
+  --font-mono: 'Share Tech Mono', monospace;
+  --transition: 0.2s ease;
+}
+[data-theme="light"] {
+  --bg:        #e6dcc8;
+  --bg2:       #ddd3be;
+  --bg3:       #d4c9b3;
+  --panel:     #f0e8d4;
+  --border:    #c8b896;
+  --border2:   #b0a07c;
+  --yellow:    #8b5e00;
+  --yellow2:   #6b4800;
+  --red:       #8b1a00;
+  --red2:      #6b1000;
+  --green:     #2d5a30;
+  --green2:    #1e3e21;
+  --text:      #1a140a;
+  --text2:     #4a3c28;
+  --text3:     #7a6a50;
+  --accent:    #8b5e00;
+  --glow:      rgba(139,94,0,0.12);
+  --glow2:     rgba(139,94,0,0.04);
+  --scanline:  rgba(0,0,0,0.02);
+}
+
+/* ═══════════════════════════════════════════
+   RESET & BASE
+═══════════════════════════════════════════ */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { font-size: 16px; scroll-behavior: smooth; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-body);
+  font-size: 1.05rem;
+  line-height: 1.6;
+  min-height: 100vh;
+  overflow-x: hidden;
+  transition: background 0.3s, color 0.3s;
+}
+
+/* Scanlines overlay */
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background: repeating-linear-gradient(
+    0deg,
+    var(--scanline) 0px,
+    var(--scanline) 1px,
+    transparent 1px,
+    transparent 3px
+  );
+  pointer-events: none;
+  z-index: 9999;
+}
+
+/* ═══════════════════════════════════════════
+   NAVIGATION BAR
+═══════════════════════════════════════════ */
+.navbar {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  background: var(--bg2);
+  border-bottom: 2px solid var(--yellow);
+  box-shadow: 0 0 30px var(--glow);
+  display: flex;
+  align-items: center;
+  padding: 0 1.5rem;
+  gap: 0;
+  overflow-x: auto;
+}
+.navbar-brand {
+  font-family: var(--font-head);
+  font-weight: 900;
+  font-size: 1.1rem;
+  letter-spacing: 0.15em;
+  color: var(--yellow);
+  text-transform: uppercase;
+  white-space: nowrap;
+  padding: 0.8rem 1rem 0.8rem 0;
+  margin-right: 1rem;
+  border-right: 1px solid var(--border2);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.navbar-brand .star { color: var(--red); font-size: 1.3em; }
+.nav-links {
+  display: flex;
+  list-style: none;
+  gap: 0;
+  flex: 1;
+  overflow-x: auto;
+}
+.nav-links li { flex-shrink: 0; }
+.nav-btn {
+  background: none;
+  border: none;
+  color: var(--text2);
+  font-family: var(--font-head);
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  padding: 0.8rem 0.9rem;
+  cursor: pointer;
+  transition: color var(--transition), background var(--transition);
+  position: relative;
+  white-space: nowrap;
+}
+.nav-btn::after {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 2px;
+  background: var(--yellow);
+  transform: scaleX(0);
+  transition: transform var(--transition);
+}
+.nav-btn:hover { color: var(--text); }
+.nav-btn:hover::after { transform: scaleX(0.6); }
+.nav-btn.active { color: var(--yellow); }
+.nav-btn.active::after { transform: scaleX(1); }
+.nav-num {
+  font-family: var(--font-mono);
+  font-size: 0.65em;
+  color: var(--text3);
+  margin-right: 0.3em;
+}
+.nav-controls {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding-left: 1rem;
+  border-left: 1px solid var(--border);
+  flex-shrink: 0;
+}
+.theme-btn {
+  background: var(--bg3);
+  border: 1px solid var(--border2);
+  color: var(--text2);
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  padding: 0.35rem 0.7rem;
+  cursor: pointer;
+  border-radius: 2px;
+  transition: all var(--transition);
+  white-space: nowrap;
+}
+.theme-btn:hover { border-color: var(--yellow); color: var(--yellow); }
+
+/* ═══════════════════════════════════════════
+   PROGRESS TRACKER (top bar)
+═══════════════════════════════════════════ */
+.progress-bar-wrap {
+  background: var(--bg2);
+  border-bottom: 1px solid var(--border);
+  padding: 0.5rem 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--text2);
+}
+.progress-label { color: var(--yellow); letter-spacing: 0.1em; white-space: nowrap; }
+.progress-track {
+  flex: 1;
+  height: 6px;
+  background: var(--border);
+  border-radius: 0;
+  overflow: hidden;
+  position: relative;
+}
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--yellow2), var(--yellow));
+  transition: width 0.4s ease;
+  box-shadow: 0 0 10px var(--glow);
+}
+.progress-count { white-space: nowrap; }
+.progress-count span { color: var(--yellow); font-weight: bold; }
+
+/* ═══════════════════════════════════════════
+   PAGES
+═══════════════════════════════════════════ */
+.page { display: none; animation: fadeIn 0.25s ease; }
+.page.active { display: block; }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
+
+.page-content {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 2.5rem 2rem 4rem;
+}
+
+/* ═══════════════════════════════════════════
+   TYPOGRAPHY
+═══════════════════════════════════════════ */
+.page-header {
+  margin-bottom: 2.5rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid var(--border2);
+}
+.page-tag {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  color: var(--red);
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  margin-bottom: 0.5rem;
+}
+.page-title {
+  font-family: var(--font-head);
+  font-size: clamp(2.2rem, 5vw, 3.5rem);
+  font-weight: 900;
+  line-height: 1;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--yellow);
+  text-shadow: 0 0 40px var(--glow);
+}
+.page-subtitle {
+  font-family: var(--font-head);
+  font-size: 1.1rem;
+  font-weight: 400;
+  color: var(--text2);
+  margin-top: 0.5rem;
+  letter-spacing: 0.05em;
+  font-style: italic;
+}
+h2 {
+  font-family: var(--font-head);
+  font-size: 1.6rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text);
+  margin: 2rem 0 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+}
+h2::before {
+  content: '';
+  display: block;
+  width: 4px;
+  height: 1.4em;
+  background: var(--yellow);
+  flex-shrink: 0;
+}
+h3 {
+  font-family: var(--font-head);
+  font-size: 1.2rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--yellow2);
+  margin: 1.5rem 0 0.6rem;
+}
+p { margin-bottom: 0.8rem; color: var(--text); }
+
+/* ═══════════════════════════════════════════
+   CARDS & PANELS
+═══════════════════════════════════════════ */
+.card {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  padding: 1.5rem;
+  margin-bottom: 1.2rem;
+  position: relative;
+}
+.card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0;
+  width: 3px; height: 100%;
+  background: var(--yellow);
+}
+.card-red::before { background: var(--red); }
+.card-green::before { background: var(--green); }
+
+.alert {
+  background: rgba(200,53,26,0.08);
+  border: 1px solid var(--red);
+  border-left: 4px solid var(--red);
+  padding: 1rem 1.2rem;
+  margin: 1rem 0;
+  font-family: var(--font-mono);
+  font-size: 0.88rem;
+  color: var(--text);
+}
+.alert-title {
+  color: var(--red);
+  font-weight: bold;
+  letter-spacing: 0.1em;
+  margin-bottom: 0.3rem;
+}
+.tip {
+  background: rgba(245,195,10,0.06);
+  border: 1px solid var(--yellow);
+  border-left: 4px solid var(--yellow);
+  padding: 1rem 1.2rem;
+  margin: 1rem 0;
+  font-size: 0.95rem;
+}
+.tip-title {
+  font-family: var(--font-mono);
+  color: var(--yellow);
+  font-size: 0.75rem;
+  letter-spacing: 0.15em;
+  margin-bottom: 0.3rem;
+}
+
+/* ═══════════════════════════════════════════
+   STEP LIST
+═══════════════════════════════════════════ */
+.step-list { list-style: none; padding: 0; }
+.step-item {
+  display: flex;
+  gap: 1rem;
+  padding: 1rem 1rem 1rem 0;
+  border-bottom: 1px solid var(--border);
+  align-items: flex-start;
+}
+.step-item:last-child { border-bottom: none; }
+.step-num {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--yellow);
+  background: rgba(245,195,10,0.1);
+  border: 1px solid var(--yellow);
+  min-width: 2.2rem;
+  height: 2.2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  font-weight: bold;
+}
+.step-body strong { color: var(--text); font-weight: 600; }
+.step-body .path {
+  font-family: var(--font-mono);
+  font-size: 0.82rem;
+  background: var(--bg3);
+  border: 1px solid var(--border2);
+  padding: 0.2rem 0.5rem;
+  color: var(--yellow2);
+  display: inline-block;
+  margin: 0.3rem 0;
+  word-break: break-all;
+}
+
+/* ═══════════════════════════════════════════
+   PROGRESS CHECKBOXES
+═══════════════════════════════════════════ */
+.checklist {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  padding: 1.2rem;
+  margin: 1.5rem 0;
+}
+.checklist-title {
+  font-family: var(--font-head);
+  font-size: 0.85rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--yellow);
+  margin-bottom: 1rem;
+  font-weight: 700;
+}
+.check-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.7rem;
+  padding: 0.5rem 0;
+  border-bottom: 1px solid var(--border);
+  cursor: pointer;
+  transition: background 0.15s;
+}
+.check-item:last-child { border-bottom: none; }
+.check-item:hover { background: var(--glow2); }
+.check-item input[type="checkbox"] { display: none; }
+.check-box {
+  width: 18px; height: 18px;
+  border: 2px solid var(--border2);
+  flex-shrink: 0;
+  margin-top: 0.15rem;
+  display: flex; align-items: center; justify-content: center;
+  transition: all 0.2s;
+  background: var(--bg3);
+}
+.check-item.checked .check-box {
+  border-color: var(--green);
+  background: var(--green2);
+}
+.check-item.checked .check-box::after {
+  content: '✓';
+  color: #fff;
+  font-size: 0.75rem;
+  font-weight: bold;
+}
+.check-item.checked .check-label {
+  text-decoration: line-through;
+  color: var(--text3);
+}
+.check-label {
+  font-size: 0.95rem;
+  line-height: 1.4;
+}
+
+/* ═══════════════════════════════════════════
+   CODE & PATHS
+═══════════════════════════════════════════ */
+code {
+  font-family: var(--font-mono);
+  font-size: 0.85em;
+  background: var(--bg3);
+  border: 1px solid var(--border2);
+  padding: 0.1em 0.4em;
+  color: var(--yellow);
+}
+.code-block {
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  background: var(--bg3);
+  border: 1px solid var(--border2);
+  border-left: 3px solid var(--yellow);
+  padding: 1rem 1.2rem;
+  margin: 0.8rem 0;
+  color: var(--text);
+  overflow-x: auto;
+  line-height: 1.8;
+}
+
+/* ═══════════════════════════════════════════
+   HOME PAGE HERO
+═══════════════════════════════════════════ */
+.hero {
+  background: var(--bg2);
+  border: 1px solid var(--border2);
+  padding: 3rem 2.5rem;
+  margin-bottom: 2rem;
+  position: relative;
+  overflow: hidden;
+}
+.hero::before {
+  content: 'DEMOCRACY';
+  position: absolute;
+  top: -0.3em; right: -0.1em;
+  font-family: var(--font-head);
+  font-size: 10rem;
+  font-weight: 900;
+  color: var(--glow2);
+  letter-spacing: -0.04em;
+  pointer-events: none;
+  line-height: 1;
+  text-transform: uppercase;
+  filter: blur(1px);
+}
+.hero-eyebrow {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.25em;
+  color: var(--red);
+  text-transform: uppercase;
+  margin-bottom: 0.8rem;
+}
+.hero-title {
+  font-family: var(--font-head);
+  font-size: clamp(2.8rem, 7vw, 5rem);
+  font-weight: 900;
+  text-transform: uppercase;
+  line-height: 0.95;
+  letter-spacing: 0.02em;
+  color: var(--yellow);
+  text-shadow: 0 0 60px var(--glow), 0 2px 0 var(--yellow2);
+  margin-bottom: 1rem;
+}
+.hero-sub {
+  font-family: var(--font-head);
+  font-size: 1.2rem;
+  font-weight: 400;
+  color: var(--text2);
+  font-style: italic;
+  max-width: 600px;
+  margin-bottom: 2rem;
+}
+.page-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 1rem;
+  margin-top: 1.5rem;
+}
+.page-card {
+  background: var(--bg3);
+  border: 1px solid var(--border2);
+  padding: 1.2rem;
+  cursor: pointer;
+  transition: all 0.2s;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  position: relative;
+  overflow: hidden;
+}
+.page-card::after {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 2px;
+  background: var(--yellow);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.2s;
+}
+.page-card:hover { border-color: var(--yellow); background: var(--panel); }
+.page-card:hover::after { transform: scaleX(1); }
+.page-card-num {
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  color: var(--yellow);
+  letter-spacing: 0.15em;
+}
+.page-card-title {
+  font-family: var(--font-head);
+  font-weight: 700;
+  font-size: 1.1rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--text);
+}
+.page-card-desc {
+  font-size: 0.85rem;
+  color: var(--text2);
+  line-height: 1.4;
+}
+
+/* ═══════════════════════════════════════════
+   SECTION DIVIDER
+═══════════════════════════════════════════ */
+.divider {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin: 2rem 0;
+}
+.divider-line { flex: 1; height: 1px; background: var(--border2); }
+.divider-text {
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  letter-spacing: 0.2em;
+  color: var(--text3);
+  text-transform: uppercase;
+}
+
+/* ═══════════════════════════════════════════
+   FORMAT GRID (two columns)
+═══════════════════════════════════════════ */
+.formats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  gap: 0.7rem;
+  margin: 1rem 0;
+}
+.format-tag {
+  background: var(--bg3);
+  border: 1px solid var(--border2);
+  padding: 0.7rem 1rem;
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  color: var(--yellow);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.format-tag::before { content: '▸'; color: var(--text3); font-size: 0.7em; }
+
+/* ═══════════════════════════════════════════
+   PAGE NAV FOOTER
+═══════════════════════════════════════════ */
+.page-nav-footer {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-top: 3rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--border2);
+}
+.page-nav-btn {
+  background: var(--panel);
+  border: 1px solid var(--border2);
+  color: var(--text2);
+  font-family: var(--font-head);
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 0.8rem 1.5rem;
+  cursor: pointer;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.page-nav-btn:hover { border-color: var(--yellow); color: var(--yellow); }
+.page-nav-btn.next { margin-left: auto; }
+
+/* ═══════════════════════════════════════════
+   STAMP / BADGE
+═══════════════════════════════════════════ */
+.stamp {
+  display: inline-block;
+  border: 3px solid var(--red);
+  color: var(--red);
+  font-family: var(--font-head);
+  font-weight: 900;
+  font-size: 0.8rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  padding: 0.3rem 0.8rem;
+  transform: rotate(-2deg);
+  opacity: 0.7;
+}
+
+/* ═══════════════════════════════════════════
+   TIMING TABLE
+═══════════════════════════════════════════ */
+.timing-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.92rem;
+  margin: 1rem 0;
+}
+.timing-table th {
+  background: var(--bg3);
+  border: 1px solid var(--border2);
+  padding: 0.7rem 1rem;
+  text-align: left;
+  font-family: var(--font-head);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--yellow);
+  font-size: 0.82rem;
+}
+.timing-table td {
+  border: 1px solid var(--border);
+  padding: 0.7rem 1rem;
+  vertical-align: top;
+}
+.timing-table tr:nth-child(even) td { background: var(--bg3); }
+
+/* ═══════════════════════════════════════════
+   RESPONSIVE
+═══════════════════════════════════════════ */
+@media (max-width: 600px) {
+  .page-content { padding: 1.5rem 1rem 3rem; }
+  .hero { padding: 2rem 1.5rem; }
+  .hero-title { font-size: 2.5rem; }
+  .page-title { font-size: 2rem; }
+  .navbar-brand { display: none; }
+}
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════
+     NAVBAR
+═══════════════════════════════════════════ -->
+<nav class="navbar">
+  <div class="navbar-brand">
+    <span class="star">★</span> HD2 MODDING
+  </div>
+  <ul class="nav-links">
+    <li><button class="nav-btn active" onclick="showPage('home', this)"><span class="nav-num">00.</span>HOME</button></li>
+    <li><button class="nav-btn" onclick="showPage('install', this)"><span class="nav-num">01.</span>INSTALL MODS</button></li>
+    <li><button class="nav-btn" onclick="showPage('tools', this)"><span class="nav-num">02.</span>TOOLS SETUP</button></li>
+    <li><button class="nav-btn" onclick="showPage('basics', this)"><span class="nav-num">03.</span>MOD BASICS</button></li>
+    <li><button class="nav-btn" onclick="showPage('voice', this)"><span class="nav-num">04.</span>VOICE & SFX</button></li>
+    <li><button class="nav-btn" onclick="showPage('music', this)"><span class="nav-num">05.</span>MUSIC MODS</button></li>
+    <li><button class="nav-btn" onclick="showPage('advanced', this)"><span class="nav-num">06.</span>ADVANCED</button></li>
+  </ul>
+  <div class="nav-controls">
+    <button class="theme-btn" onclick="toggleTheme()" id="theme-btn">☀ LIGHT</button>
+  </div>
+</nav>
+
+<!-- GLOBAL PROGRESS BAR -->
+<div class="progress-bar-wrap">
+  <span class="progress-label">▸ OPERATION PROGRESS</span>
+  <div class="progress-track"><div class="progress-fill" id="progress-fill" style="width:0%"></div></div>
+  <span class="progress-count"><span id="progress-done">0</span>/<span id="progress-total">0</span> OBJECTIVES</span>
+</div>
+
+<!-- ═══════════════════════════════════════════
+     PAGE 0: HOME
+═══════════════════════════════════════════ -->
+<div class="page active" id="page-home">
+<div class="page-content">
+  <div class="hero">
+    <div class="hero-eyebrow">⚠ CLASSIFIED // SUPER EARTH MINISTRY OF SOUND // LEVEL 5 CLEARANCE</div>
+    <div class="hero-title">HELLDIVERS 2<br>MOD GUIDE</div>
+    <div class="hero-sub">You've been selected by the Ministry of Truth to learn the sacred art of audio modding. Eagle-1 is counting on you, Helldiver. Don't screw this up.</div>
+    <div class="stamp">SUPER EARTH APPROVED</div>
+  </div>
+
+  <h2>WHAT IS THIS GUIDE?</h2>
+  <div class="card">
+    <p>This guide covers everything you need to know about modding Helldivers 2 audio — from installing other people's mods like a perfectly obedient citizen, to creating your own custom audio mods for the glory of Super Earth.</p>
+    <p>No prior modding experience required. Minimal democracy required. Maximum patriotism recommended.</p>
+  </div>
+
+  <div class="tip">
+    <div class="tip-title">★ PRO TIP FROM THE MINISTRY</div>
+    <p>Check off each task as you complete it. Your progress is saved automatically, because unlike the bugs, progress is worth preserving.</p>
+  </div>
+
+  <h2>MISSION BRIEFING</h2>
+  <p>Follow the chapters in order like a good soldier, or skip around if you're the reckless type who dives into bug nests without a shield pack.</p>
+
+  <div class="page-grid">
+    <div class="page-card" onclick="showPage('install', document.querySelectorAll('.nav-btn')[1])">
+      <span class="page-card-num">CHAPTER 01</span>
+      <span class="page-card-title">Install Mods</span>
+      <span class="page-card-desc">Nexus Mods + Arsenal Mod Manager. Zero modding skill required.</span>
+    </div>
+    <div class="page-card" onclick="showPage('tools', document.querySelectorAll('.nav-btn')[2])">
+      <span class="page-card-num">CHAPTER 02</span>
+      <span class="page-card-title">Tools Setup</span>
+      <span class="page-card-desc">Install Wwise & the Audio Modding Tool. It's free (as freedom).</span>
+    </div>
+    <div class="page-card" onclick="showPage('basics', document.querySelectorAll('.nav-btn')[3])">
+      <span class="page-card-num">CHAPTER 03</span>
+      <span class="page-card-title">Mod Basics</span>
+      <span class="page-card-desc">Loading archives, finding audio, importing files.</span>
+    </div>
+    <div class="page-card" onclick="showPage('voice', document.querySelectorAll('.nav-btn')[4])">
+      <span class="page-card-num">CHAPTER 04</span>
+      <span class="page-card-title">Voice & SFX</span>
+      <span class="page-card-desc">Change Eagle-1's voice lines. She won't know. Probably.</span>
+    </div>
+    <div class="page-card" onclick="showPage('music', document.querySelectorAll('.nav-btn')[5])">
+      <span class="page-card-num">CHAPTER 05</span>
+      <span class="page-card-title">Music Mods</span>
+      <span class="page-card-desc">Swap the ship ambience. DOOM OST? Lofi? Go nuts.</span>
+    </div>
+    <div class="page-card" onclick="showPage('advanced', document.querySelectorAll('.nav-btn')[6])">
+      <span class="page-card-num">CHAPTER 06</span>
+      <span class="page-card-title">Advanced</span>
+      <span class="page-card-desc">Music timing, fade points, volume graphs. For real ones.</span>
+    </div>
+  </div>
+
+  <div class="divider"><div class="divider-line"></div><div class="divider-text">OPERATION STATUS</div><div class="divider-line"></div></div>
+
+  <h2>YOUR PROGRESS</h2>
+  <p style="color:var(--text2); font-size:0.9rem;">All checkboxes across every chapter are listed below for a full mission overview.</p>
+  <div id="global-checklist"></div>
+
+  <div class="page-nav-footer">
+    <button class="page-nav-btn next" onclick="showPage('install', document.querySelectorAll('.nav-btn')[1])">CHAPTER 01: INSTALL MODS ▸</button>
+  </div>
+</div>
+</div>
+
+<!-- ═══════════════════════════════════════════
+     PAGE 1: INSTALL MODS
+═══════════════════════════════════════════ -->
+<div class="page" id="page-install">
+<div class="page-content">
+  <div class="page-header">
+    <div class="page-tag">★ CHAPTER 01 // INSTALLING MODS</div>
+    <div class="page-title">Install<br>Mods</div>
+    <div class="page-subtitle">"A Helldiver without mods is just… a diver." — Probably someone</div>
+  </div>
+
+  <div class="card">
+    <p>Before you can <em>make</em> mods, it helps to know how to <em>use</em> them. This chapter covers getting other people's mods onto your game using Nexus Mods and Arsenal — the two-step combo that runs the HD2 mod scene.</p>
+  </div>
+
+  <h2>NEXUS MODS</h2>
+  <p>Nexus Mods is the biggest mod hosting site on the internet. Think of it as a black market for game assets, but legal and run by people who love games.</p>
+
+  <ul class="step-list">
+    <li class="step-item">
+      <div class="step-num">01</div>
+      <div class="step-body">
+        <strong>Go to NexusMods.com</strong><br>
+        Navigate to <code>nexusmods.com</code> and create a free account. You don't need a premium account to download mods (but it does make downloads faster if you enjoy waiting).
+      </div>
+    </li>
+    <li class="step-item">
+      <div class="step-num">02</div>
+      <div class="step-body">
+        <strong>Find Helldivers 2 mods</strong><br>
+        Search for "Helldivers 2" or browse the game page directly. There are audio mods, texture mods, cosmetic mods — the whole democratic buffet.
+      </div>
+    </li>
+    <li class="step-item">
+      <div class="step-num">03</div>
+      <div class="step-body">
+        <strong>Note the "Vortex" button</strong><br>
+        You'll see a "Mod Manager Download" button on mods. Don't use Vortex for HD2 — use Arsenal instead (see below). Just grab the manual download.
+      </div>
+    </li>
+  </ul>
+
+  <h2>ARSENAL MOD MANAGER</h2>
+  <p>Arsenal is the go-to mod manager specifically built for Helldivers 2. It handles dropping patch files into the right folders so you don't have to do it manually like some kind of level 1 Helldiver.</p>
+
+  <ul class="step-list">
+    <li class="step-item">
+      <div class="step-num">01</div>
+      <div class="step-body">
+        <strong>Download Arsenal Mod Manager</strong><br>
+        Search "Arsenal Mod Manager Helldivers 2" on Nexus Mods and download it. Extract the zip wherever you want — your Desktop works fine, General Brasch won't judge.
+      </div>
+    </li>
+    <li class="step-item">
+      <div class="step-num">02</div>
+      <div class="step-body">
+        <strong>Run Arsenal & point it at your game</strong><br>
+        Launch Arsenal and tell it where Helldivers 2 is installed. On Windows this is usually:<br>
+        <span class="path">C:\Program Files (x86)\Steam\steamapps\common\Helldivers 2</span><br>
+        or on a secondary drive:<br>
+        <span class="path">X:\SteamLibrary\steamapps\common\Helldivers 2</span>
+      </div>
+    </li>
+    <li class="step-item">
+      <div class="step-num">03</div>
+      <div class="step-body">
+        <strong>Add mods</strong><br>
+        Drag downloaded mod zip files into Arsenal, or use the "Add Mod" button. Arsenal will handle extracting the patch files into the correct location in the game's <code>data</code> folder.
+      </div>
+    </li>
+    <li class="step-item">
+      <div class="step-num">04</div>
+      <div class="step-body">
+        <strong>Enable & launch</strong><br>
+        Toggle mods on/off with the checkboxes in Arsenal, then launch the game. That's it. You are now a certified mod user. The Ministry is proud of your consumption.
+      </div>
+    </li>
+  </ul>
+
+  <div class="alert">
+    <div class="alert-title">⚠ IMPORTANT: GAME UPDATES</div>
+    Game patches from Arrowhead can break mods. If the game updates and crashes, open Arsenal and disable all mods until mod authors update them. This is not a Terminid attack. Probably.
+  </div>
+
+  <div class="checklist">
+    <div class="checklist-title">✦ CHAPTER 01 OBJECTIVES</div>
+    <label class="check-item" data-id="c01-nexus"><div class="check-box"></div><span class="check-label">Created a Nexus Mods account</span></label>
+    <label class="check-item" data-id="c01-arsenal"><div class="check-box"></div><span class="check-label">Downloaded Arsenal Mod Manager</span></label>
+    <label class="check-item" data-id="c01-setup"><div class="check-box"></div><span class="check-label">Pointed Arsenal at your Helldivers 2 install</span></label>
+    <label class="check-item" data-id="c01-mod"><div class="check-box"></div><span class="check-label">Successfully installed at least one mod</span></label>
+  </div>
+
+  <div class="page-nav-footer">
+    <button class="page-nav-btn" onclick="showPage('home', document.querySelectorAll('.nav-btn')[0])">◂ HOME</button>
+    <button class="page-nav-btn next" onclick="showPage('tools', document.querySelectorAll('.nav-btn')[2])">CHAPTER 02: TOOLS SETUP ▸</button>
+  </div>
+</div>
+</div>
+
+<!-- ═══════════════════════════════════════════
+     PAGE 2: TOOLS SETUP
+═══════════════════════════════════════════ -->
+<div class="page" id="page-tools">
+<div class="page-content">
+  <div class="page-header">
+    <div class="page-tag">★ CHAPTER 02 // TOOLS SETUP</div>
+    <div class="page-title">Tools<br>Setup</div>
+    <div class="page-subtitle">"A Helldiver without their weapons is just a corpse in a cool suit."</div>
+  </div>
+
+  <div class="card">
+    <p>To <em>create</em> audio mods you need two things: <strong>Wwise</strong> (for converting audio formats) and the <strong>HD2 Audio Modding Tool</strong> (for actually replacing game audio). Both are free. Super Earth would never make you pay for democracy.</p>
+  </div>
+
+  <h2>INSTALLING WWISE</h2>
+  <p>Wwise is an industry-standard audio middleware tool from Audiokinetic. Helldivers 2 uses it to handle all in-game audio, and the modding tool uses it to convert your files into the game's format.</p>
+
+  <div class="tip">
+    <div class="tip-title">★ GOOD NEWS FROM THE MINISTRY</div>
+    Wwise is <strong>completely free</strong> for non-commercial projects. You're not selling your Eagle-1 soundpack, are you? Good.
+  </div>
+
+  <ul class="step-list">
+    <li class="step-item">
+      <div class="step-num">01</div>
+      <div class="step-body">
+        <strong>Create an Audiokinetic account</strong><br>
+        Go to <code>audiokinetic.com/en/download/</code> and make a free account. Yes, another account. The price of democracy is remembering passwords.
+      </div>
+    </li>
+    <li class="step-item">
+      <div class="step-num">02</div>
+      <div class="step-body">
+        <strong>Download the Audiokinetic Launcher</strong><br>
+        Download and install the launcher. It's like Steam, but for audio tools and significantly less distracting.
+      </div>
+    </li>
+    <li class="step-item">
+      <div class="step-num">03</div>
+      <div class="step-body">
+        <strong>Install a version of Wwise</strong><br>
+        In the launcher, click the <strong>Wwise</strong> tab on the left. Under "Install a New Version", pick the latest stable version and click <strong>Install</strong>. You don't need any optional plugins. Keep it lean.
+      </div>
+    </li>
+    <li class="step-item">
+      <div class="step-num">04</div>
+      <div class="step-body">
+        <strong>Verify installation</strong><br>
+        You should see your installed version appear under "Installed Versions" in the launcher. If you see it, congratulations — Wwise is deployed.
+      </div>
+    </li>
+  </ul>
+
+  <div class="divider"><div class="divider-line"></div><div class="divider-text">NEXT OBJECTIVE</div><div class="divider-line"></div></div>
+
+  <h2>AUDIO MODDING TOOL</h2>
+  <p>This is the actual tool you'll use to swap audio in the game archives. It works alongside Wwise to handle format conversion behind the scenes.</p>
+
+  <ul class="step-list">
+    <li class="step-item">
+      <div class="step-num">01</div>
+      <div class="step-body">
+        <strong>Download the HD2 Audio Modding Tool</strong><br>
+        Find it on the Helldivers 2 modding community resources (Nexus or the HD2 modding Discord). Download the <code>.zip</code> for your OS.
+      </div>
+    </li>
+    <li class="step-item">
+      <div class="step-num">02</div>
+      <div class="step-body">
+        <strong>Extract the zip</strong><br>
+        Extract anywhere you like. A dedicated mods folder is recommended:<br>
+        <span class="path">C:\HDMods\audio_modder\</span>
+      </div>
+    </li>
+    <li class="step-item">
+      <div class="step-num">03</div>
+      <div class="step-body">
+        <strong>Launch the tool</strong><br>
+        Run <code>audio_modder.exe</code> (Windows) or <code>audio_modder</code> (Linux/MacOS). On first launch it will ask you to locate your game data folder.
+      </div>
+    </li>
+    <li class="step-item">
+      <div class="step-num">04</div>
+      <div class="step-body">
+        <strong>Point it at Helldivers 2</strong><br>
+        Navigate to your Helldivers 2 install folder and select it. Same path as before:<br>
+        <span class="path">C:\Program Files (x86)\Steam\steamapps\common\Helldivers 2</span>
+      </div>
+    </li>
+  </ul>
+
+  <div class="alert">
+    <div class="alert-title">⚠ WWISE IS REQUIRED FOR AUDIO MODS</div>
+    You only need Wwise if you're making <strong>audio mods</strong>. For text-only mods (renaming weapons etc.), Wwise is not needed. The tool will handle text without it.
+  </div>
+
+  <div class="checklist">
+    <div class="checklist-title">✦ CHAPTER 02 OBJECTIVES</div>
+    <label class="check-item" data-id="c02-account"><div class="check-box"></div><span class="check-label">Created an Audiokinetic account</span></label>
+    <label class="check-item" data-id="c02-launcher"><div class="check-box"></div><span class="check-label">Installed the Audiokinetic Launcher</span></label>
+    <label class="check-item" data-id="c02-wwise"><div class="check-box"></div><span class="check-label">Installed a version of Wwise</span></label>
+    <label class="check-item" data-id="c02-tool"><div class="check-box"></div><span class="check-label">Downloaded the HD2 Audio Modding Tool</span></label>
+    <label class="check-item" data-id="c02-pointed"><div class="check-box"></div><span class="check-label">Pointed the tool at your game folder</span></label>
+  </div>
+
+  <div class="page-nav-footer">
+    <button class="page-nav-btn" onclick="showPage('install', document.querySelectorAll('.nav-btn')[1])">◂ CHAPTER 01</button>
+    <button class="page-nav-btn next" onclick="showPage('basics', document.querySelectorAll('.nav-btn')[3])">CHAPTER 03: MOD BASICS ▸</button>
+  </div>
+</div>
+</div>
+
+<!-- ═══════════════════════════════════════════
+     PAGE 3: MOD BASICS
+═══════════════════════════════════════════ -->
+<div class="page" id="page-basics">
+<div class="page-content">
+  <div class="page-header">
+    <div class="page-tag">★ CHAPTER 03 // MOD BASICS</div>
+    <div class="page-title">Mod<br>Basics</div>
+    <div class="page-subtitle">"Know your archives before you charge into them, Helldiver."</div>
+  </div>
+
+  <h2>LOADING GAME ARCHIVES</h2>
+  <p>All of HD2's audio is stored in <strong>archive files</strong> inside the game's <code>data</code> folder. Each archive contains one or more <strong>sound banks</strong>, which contain the actual audio files. The modding tool is your key to these vaults.</p>
+
+  <h3>Using the Search Bar (Easy Mode)</h3>
+  <ul class="step-list">
+    <li class="step-item">
+      <div class="step-num">01</div>
+      <div class="step-body">
+        Click the search bar in the <strong>top left</strong> of the tool and type what you're looking for — weapon names, character names, stratagems, etc. ("Eagle 1", "Berserker", etc.)
+      </div>
+    </li>
+    <li class="step-item">
+      <div class="step-num">02</div>
+      <div class="step-body">
+        A dropdown appears with matching archives. <strong>Double-click</strong> an entry to load it, or use arrow keys and press Enter.
+      </div>
+    </li>
+    <li class="step-item">
+      <div class="step-num">03</div>
+      <div class="step-body">
+        Use the <strong>language dropdown</strong> on the right to filter results to a specific audio language (English, French, Japanese, etc.).
+      </div>
+    </li>
+  </ul>
+
+  <h3>Loading Archives Manually (Hard Mode)</h3>
+  <p>If you know the specific archive filename (from the <em>Helldivers 2 Archive Labeling</em> spreadsheet), go to <strong>File → Open → From HD2 Data Folder</strong>, type the archive name in the search box, and select it.</p>
+
+  <h2>ACCEPTABLE AUDIO FORMATS</h2>
+  <p>The tool can import audio from these formats — no conversion needed on your end:</p>
+
+  <div class="formats-grid">
+    <div class="format-tag">.wav (linear PCM)</div>
+    <div class="format-tag">.mp3</div>
+    <div class="format-tag">.m4a</div>
+    <div class="format-tag">.ogg</div>
+    <div class="format-tag">.wem (Vorbis only)</div>
+  </div>
+
+  <div class="alert">
+    <div class="alert-title">⚠ WEM FILES: VORBIS ONLY</div>
+    If you're using <code>.wem</code> files directly, they <strong>must</strong> be in Vorbis format. Other Wwise codecs will not work. You've been warned.
+  </div>
+
+  <h2>NAVIGATING SOUND BANKS</h2>
+  <ul class="step-list">
+    <li class="step-item">
+      <div class="step-num">01</div>
+      <div class="step-body">
+        Once an archive loads, its contents appear in the <strong>Resource Panel</strong> (middle column). You'll see a tree of <strong>Sound Banks</strong>.
+      </div>
+    </li>
+    <li class="step-item">
+      <div class="step-num">02</div>
+      <div class="step-body">
+        Click the <strong>arrow</strong> next to a Sound Bank to expand it and reveal its <strong>Audio Sources</strong> (the individual .wem files).
+      </div>
+    </li>
+    <li class="step-item">
+      <div class="step-num">03</div>
+      <div class="step-body">
+        <strong>Double-click</strong> any audio source to <strong>play it</strong> and preview what it sounds like. Find the specific line you want to replace before touching anything.
+      </div>
+    </li>
+  </ul>
+
+  <div class="tip">
+    <div class="tip-title">★ PANEL GUIDE</div>
+    <strong>Workspace Panel</strong> (left) — quick access to your mod folders.<br>
+    <strong>Resource Panel</strong> (middle) — the loaded archive contents.<br>
+    <strong>Info Panel</strong> (right) — details + controls for the selected file.
+  </div>
+
+  <div class="checklist">
+    <div class="checklist-title">✦ CHAPTER 03 OBJECTIVES</div>
+    <label class="check-item" data-id="c03-load"><div class="check-box"></div><span class="check-label">Successfully loaded a game archive</span></label>
+    <label class="check-item" data-id="c03-preview"><div class="check-box"></div><span class="check-label">Previewed audio files in the tool</span></label>
+    <label class="check-item" data-id="c03-formats"><div class="check-box"></div><span class="check-label">Prepared your replacement audio in a supported format</span></label>
+  </div>
+
+  <div class="page-nav-footer">
+    <button class="page-nav-btn" onclick="showPage('tools', document.querySelectorAll('.nav-btn')[2])">◂ CHAPTER 02</button>
+    <button class="page-nav-btn next" onclick="showPage('voice', document.querySelectorAll('.nav-btn')[4])">CHAPTER 04: VOICE & SFX ▸</button>
+  </div>
+</div>
+</div>
+
+<!-- ═══════════════════════════════════════════
+     PAGE 4: VOICE & SFX
+═══════════════════════════════════════════ -->
+<div class="page" id="page-voice">
+<div class="page-content">
+  <div class="page-header">
+    <div class="page-tag">★ CHAPTER 04 // VOICE LINES & SOUND EFFECTS</div>
+    <div class="page-title">Voice &<br>SFX Mods</div>
+    <div class="page-subtitle">"Eagle-1 has cleared the area. (She sounded different today. Don't ask.)"</div>
+  </div>
+
+  <div class="tip">
+    <div class="tip-title">★ PREREQUISITE</div>
+    You must have <strong>Wwise installed</strong> (Chapter 02) before doing this. No Wwise = no audio conversion = a very disappointing modding experience.
+  </div>
+
+  <h2>EXAMPLE: REPLACING EAGLE-1 VOICE LINES</h2>
+  <p>We'll use Eagle-1 as our example. She has lots of lines, she's very chatty, and she probably won't notice if you swap a few of them.</p>
+
+  <h3>Step 1 — Load the Archive</h3>
+  <ul class="step-list">
+    <li class="step-item">
+      <div class="step-num">01</div>
+      <div class="step-body">Type <code>Eagle 1</code> in the Archive Search bar and select <strong>Eagle 1 (English)</strong> from the dropdown. Double-click to load it.</div>
+    </li>
+    <li class="step-item">
+      <div class="step-num">02</div>
+      <div class="step-body">The archive contents appear in the Resource Panel. Find and expand the <strong>Eagle 1 (English)</strong> sound bank by clicking the arrow. Ignore the other banks for now.</div>
+    </li>
+    <li class="step-item">
+      <div class="step-num">03</div>
+      <div class="step-body">Double-click audio sources to preview them until you find the exact line you want to replace. Write down its ID number — you'll need it.</div>
+    </li>
+  </ul>
+
+  <h3>Step 2 — Importing a Single File</h3>
+  <ul class="step-list">
+    <li class="step-item">
+      <div class="step-num">01</div>
+      <div class="step-body"><strong>Right-click</strong> the audio source you want to replace and select <strong>"Import Audio"</strong>. Select your replacement file. Done. The file name doesn't matter for single imports.</div>
+    </li>
+    <li class="step-item">
+      <div class="step-num">02</div>
+      <div class="step-body">Alternatively, just <strong>drag-and-drop</strong> your file directly onto the target audio source in the panel. Same result, fewer clicks.</div>
+    </li>
+    <li class="step-item">
+      <div class="step-num">03</div>
+      <div class="step-body"><strong>Bonus trick:</strong> Select multiple audio sources with Shift-click or Ctrl-click, then right-click → "Import Audio" to replace ALL of them with the same file. Eagle-1 saying the same thing repeatedly? Valid strategy.</div>
+    </li>
+  </ul>
+
+  <h3>Step 3 — Importing Multiple Files</h3>
+  <p>Replacing many lines at once? You need to name your files correctly so the tool knows which goes where.</p>
+
+  <div class="card">
+    <p><strong>Naming convention:</strong> Start every filename with the ID number of the audio it replaces.</p>
+    <div class="code-block">
+145696025224819062<span style="color:var(--yellow)">4</span>.wav<br>
+125742167462131828<span style="color:var(--yellow)">67</span>.wav<br>
+5786867730735499085<span style="color:var(--yellow)">_here_comes_the_cavalry</span>.wav
+    </div>
+    <p style="font-size:0.9rem; color:var(--text2);">You can include extra text after the ID — as long as the filename <em>starts</em> with the correct ID, the tool will find it.</p>
+  </div>
+
+  <ul class="step-list">
+    <li class="step-item">
+      <div class="step-num">01</div>
+      <div class="step-body"><strong>Get the ID:</strong> Right-click any audio source in the tool and choose <strong>"Copy File ID"</strong>. Paste it as the start of your filename.</div>
+    </li>
+    <li class="step-item">
+      <div class="step-num">02</div>
+      <div class="step-body"><strong>Batch import:</strong> Once your files are named, drag them all into the Resource Panel at once, or go to <strong>File → Import → Import Audio Files</strong>.</div>
+    </li>
+    <li class="step-item">
+      <div class="step-num">03</div>
+      <div class="step-body">Modified audio sources will turn <span style="color:var(--green); font-weight:bold;">GREEN</span> in the panel to confirm the replacement was successful.</div>
+    </li>
+  </ul>
+
+  <h3>Step 4 — Generate the Patch</h3>
+  <ul class="step-list">
+    <li class="step-item">
+      <div class="step-num">01</div>
+      <div class="step-body">Go to <strong>File → Write Patch</strong>. Choose a save location. The tool generates the patch file(s) for your mod.</div>
+    </li>
+    <li class="step-item">
+      <div class="step-num">02</div>
+      <div class="step-body">Place the generated patch files in Arsenal or drop them directly into the game's <code>data</code> folder. Launch the game and enjoy your cursed creation.</div>
+    </li>
+  </ul>
+
+  <div class="alert">
+    <div class="alert-title">⚠ REVERTING CHANGES</div>
+    Changed your mind? Modified files are highlighted in green. Go to <strong>Edit → Revert All Changes</strong> to undo everything, or click the <strong>Revert</strong> button in the Info Panel to undo a single file.
+  </div>
+
+  <div class="checklist">
+    <div class="checklist-title">✦ CHAPTER 04 OBJECTIVES</div>
+    <label class="check-item" data-id="c04-archive"><div class="check-box"></div><span class="check-label">Loaded a voice archive (e.g., Eagle 1 English)</span></label>
+    <label class="check-item" data-id="c04-found"><div class="check-box"></div><span class="check-label">Found and previewed the audio you want to replace</span></label>
+    <label class="check-item" data-id="c04-id"><div class="check-box"></div><span class="check-label">Copied the audio file ID</span></label>
+    <label class="check-item" data-id="c04-import"><div class="check-box"></div><span class="check-label">Imported your replacement audio (green highlight!)</span></label>
+    <label class="check-item" data-id="c04-patch"><div class="check-box"></div><span class="check-label">Generated the patch file with "Write Patch"</span></label>
+  </div>
+
+  <div class="page-nav-footer">
+    <button class="page-nav-btn" onclick="showPage('basics', document.querySelectorAll('.nav-btn')[3])">◂ CHAPTER 03</button>
+    <button class="page-nav-btn next" onclick="showPage('music', document.querySelectorAll('.nav-btn')[5])">CHAPTER 05: MUSIC MODS ▸</button>
+  </div>
+</div>
+</div>
+
+<!-- ═══════════════════════════════════════════
+     PAGE 5: MUSIC MODS
+═══════════════════════════════════════════ -->
+<div class="page" id="page-music">
+<div class="page-content">
+  <div class="page-header">
+    <div class="page-tag">★ CHAPTER 05 // MUSIC MODS</div>
+    <div class="page-title">Music<br>Mods</div>
+    <div class="page-subtitle">"The ship ambience is nice and all, but have you considered: DOOM OST?"</div>
+  </div>
+
+  <div class="tip">
+    <div class="tip-title">★ PREREQUISITE</div>
+    Wwise must be installed. Music mods involve timing data, which makes them slightly more involved than voice line swaps, but you've made it this far.
+  </div>
+
+  <h2>EXAMPLE: CHANGING SHIP AMBIENCE</h2>
+  <p>The ambient music aboard your Super Destroyer plays when you're hanging out between missions. Here's how to swap it for something that better matches your energy.</p>
+
+  <ul class="step-list">
+    <li class="step-item">
+      <div class="step-num">01</div>
+      <div class="step-body">Search for <code>Ship Music</code> in the Archive Search bar and double-click the result to load it.</div>
+    </li>
+    <li class="step-item">
+      <div class="step-num">02</div>
+      <div class="step-body">The archive contains two sound banks: <strong>Ship Music</strong> and <strong>Music</strong>. The ship ambience lives in both — modding either one saves changes to both automatically.</div>
+    </li>
+    <li class="step-item">
+      <div class="step-num">03</div>
+      <div class="step-body">Expand the <strong>Music</strong> sound bank. The audio source ID for the ship ambience is:<br><div class="code-block">1524611437487953956</div>Find it in the list and double-click to confirm you're replacing the right thing.</div>
+    </li>
+    <li class="step-item">
+      <div class="step-num">04</div>
+      <div class="step-body">
+        Name your replacement audio file starting with the ID:<br>
+        <div class="code-block">1524611437487953956_ship_ambience.wav</div>
+        Then drag-and-drop it into the Resource Panel. The entry will turn green.
+      </div>
+    </li>
+  </ul>
+
+  <h2>MUSIC TIMING — THE IMPORTANT BIT</h2>
+  <p>Unlike voice lines, music has <strong>timing metadata</strong> that controls how it loops, fades, and transitions. The tool automatically sets this based on your audio file's length, which works for most cases.</p>
+
+  <div class="card">
+    <p>After importing your music, the tool auto-sets the duration to match your file length. <strong>For simple ship ambience replacement, this is all you need</strong> — the tool handles it.</p>
+    <p>If you want fine control over looping and fades, see Chapter 06: Advanced.</p>
+  </div>
+
+  <ul class="step-list">
+    <li class="step-item">
+      <div class="step-num">05</div>
+      <div class="step-body">Once the audio is imported and looking green, go to <strong>File → Write Patch</strong> to generate your patch files. Save them somewhere sensible.</div>
+    </li>
+    <li class="step-item">
+      <div class="step-num">06</div>
+      <div class="step-body">Load the patch via Arsenal or drop it in the game's <code>data</code> folder. Boot the game, get on your ship, and enjoy whatever chaos you've unleashed on your audio system.</div>
+    </li>
+  </ul>
+
+  <div class="alert">
+    <div class="alert-title">⚠ MULTIPLE SEGMENTS MAY BE HIGHLIGHTED</div>
+    When you change one audio source in a music archive, you may see <strong>multiple Music Segments and Tracks highlighted</strong> green. This is normal — it means the same audio is used in more than one place. You'll need to update timing in <em>all</em> highlighted segments if you're doing advanced edits.
+  </div>
+
+  <div class="checklist">
+    <div class="checklist-title">✦ CHAPTER 05 OBJECTIVES</div>
+    <label class="check-item" data-id="c05-archive"><div class="check-box"></div><span class="check-label">Loaded the Ship Music archive</span></label>
+    <label class="check-item" data-id="c05-found"><div class="check-box"></div><span class="check-label">Found audio ID 1524611437487953956</span></label>
+    <label class="check-item" data-id="c05-named"><div class="check-box"></div><span class="check-label">Named your audio file with the correct ID prefix</span></label>
+    <label class="check-item" data-id="c05-import"><div class="check-box"></div><span class="check-label">Imported the replacement music</span></label>
+    <label class="check-item" data-id="c05-patch"><div class="check-box"></div><span class="check-label">Wrote the patch and tested in-game</span></label>
+  </div>
+
+  <div class="page-nav-footer">
+    <button class="page-nav-btn" onclick="showPage('voice', document.querySelectorAll('.nav-btn')[4])">◂ CHAPTER 04</button>
+    <button class="page-nav-btn next" onclick="showPage('advanced', document.querySelectorAll('.nav-btn')[6])">CHAPTER 06: ADVANCED ▸</button>
+  </div>
+</div>
+</div>
+
+<!-- ═══════════════════════════════════════════
+     PAGE 6: ADVANCED
+═══════════════════════════════════════════ -->
+<div class="page" id="page-advanced">
+<div class="page-content">
+  <div class="page-header">
+    <div class="page-tag">★ CHAPTER 06 // ADVANCED MUSIC MODDING</div>
+    <div class="page-title">Advanced<br>Modding</div>
+    <div class="page-subtitle">"You have volunteered for the advanced squad. May Super Earth have mercy on you."</div>
+  </div>
+
+  <div class="card">
+    <p>This chapter covers the timing and volume systems that control how music plays in-game. The tool handles the basics automatically, but if your music loops weirdly or cuts off too early, this is where you fix it.</p>
+  </div>
+
+  <h2>MUSIC TIMING PARAMETERS</h2>
+  <p>Music in HD2 has two layers: <strong>Music Tracks</strong> (the audio clip level) and <strong>Music Segments</strong> (the sequence/loop level). Each has its own timing controls.</p>
+
+  <h3>Music Track Parameters</h3>
+  <table class="timing-table">
+    <tr>
+      <th>Parameter</th>
+      <th>What it does</th>
+    </tr>
+    <tr>
+      <td><code>Duration (ms)</code></td>
+      <td>How long the track plays. Usually set to the full length of your audio. The track cuts off at this time even if audio is still playing.</td>
+    </tr>
+    <tr>
+      <td><code>Play At (ms)</code></td>
+      <td>When the track starts playing within its parent Segment. 0 = immediately. Negative values start mid-clip. Useful for layering tracks.</td>
+    </tr>
+    <tr>
+      <td><code>Start Trim (ms)</code></td>
+      <td>Cuts the beginning off. 1000ms = first second is silent. Use to skip intros.</td>
+    </tr>
+    <tr>
+      <td><code>End Trim (ms)</code></td>
+      <td>Cuts the end off. 1000ms = last second is removed. Use to trim outros.</td>
+    </tr>
+  </table>
+
+  <h3>Music Segment Parameters</h3>
+  <table class="timing-table">
+    <tr>
+      <th>Parameter</th>
+      <th>What it does</th>
+    </tr>
+    <tr>
+      <td><code>Duration (ms)</code></td>
+      <td>How long the segment plays. If your audio is shorter, the segment plays silence for the remainder. If longer, audio cuts off.</td>
+    </tr>
+    <tr>
+      <td><code>End Fade-In (ms)</code></td>
+      <td>Transition marker — aligns with the previous segment's Start Fade-Out. Set this to when your music finishes fading in.</td>
+    </tr>
+    <tr>
+      <td><code>Start Fade-Out (ms)</code></td>
+      <td>Transition marker — aligns with the next segment's End Fade-In. Set this to when your music starts fading out.</td>
+    </tr>
+  </table>
+
+  <div class="tip">
+    <div class="tip-title">★ SIMPLE LOOPING MUSIC? IGNORE MOST OF THIS.</div>
+    For simple ship ambience replacement with no fancy transitions, just make sure <strong>Duration</strong> matches your audio length and leave everything else at defaults. The tool sets this automatically on import.
+  </div>
+
+  <h2>ADJUSTING TIMING</h2>
+  <ul class="step-list">
+    <li class="step-item">
+      <div class="step-num">01</div>
+      <div class="step-body">Go to <strong>View → Hierarchy</strong> to switch to Hierarchy View. This shows Music Tracks and Segments instead of raw audio sources.</div>
+    </li>
+    <li class="step-item">
+      <div class="step-num">02</div>
+      <div class="step-body">Find your modified music by looking for the highlighted (green) entries. Click a Music Segment or Music Track to see its timing info in the <strong>Info Panel</strong>.</div>
+    </li>
+    <li class="step-item">
+      <div class="step-num">03</div>
+      <div class="step-body">Edit the values directly in the Info Panel fields and click <strong>Apply</strong>. Without clicking Apply, nothing saves.</div>
+    </li>
+    <li class="step-item">
+      <div class="step-num">04</div>
+      <div class="step-body"><strong>CRITICAL:</strong> If multiple Segments/Tracks are highlighted, update <em>all of them</em>. Audio shared across multiple tracks needs consistent timing in each one or you'll get weird results.</div>
+    </li>
+  </ul>
+
+  <h2>VOLUME GRAPHS</h2>
+  <p>Many Music Tracks have a volume graph that adjusts the audio volume over time (used for dynamic mixing in-game). You can edit these manually.</p>
+
+  <div class="card card-red">
+    <p>The volume graph's Y-axis is a <strong>percentage adjustment</strong> from baseline:<br>
+    <code>0%</code> = no change (plays normally)<br>
+    <code>-100%</code> = completely silent<br>
+    Positive values = louder than baseline</p>
+  </div>
+
+  <h3>Editing the Graph</h3>
+  <ul class="step-list">
+    <li class="step-item"><div class="step-num">+</div><div class="step-body"><strong>Add a point:</strong> Left-click on an empty area of the graph.</div></li>
+    <li class="step-item"><div class="step-num">✥</div><div class="step-body"><strong>Move a point:</strong> Left-click and drag an existing point.</div></li>
+    <li class="step-item"><div class="step-num">✕</div><div class="step-body"><strong>Remove a point:</strong> Right-click on a point.</div></li>
+    <li class="step-item"><div class="step-num">✓</div><div class="step-body"><strong>Save changes:</strong> Click <strong>Apply</strong>. Don't forget this step or nothing saves.</div></li>
+  </ul>
+
+  <div class="alert">
+    <div class="alert-title">⚠ PATCH MODIFICATION RULES</div>
+    <strong>Do NOT write a patch of a patch.</strong><br>
+    <strong>Do NOT use Save with game archives — only with patch files.</strong><br>
+    To add new audio to an existing patch: open the original archive first, import the patch file, then add your new audio, then Write Patch.
+  </div>
+
+  <div class="checklist">
+    <div class="checklist-title">✦ CHAPTER 06 OBJECTIVES</div>
+    <label class="check-item" data-id="c06-hierarchy"><div class="check-box"></div><span class="check-label">Switched to Hierarchy View</span></label>
+    <label class="check-item" data-id="c06-timing"><div class="check-box"></div><span class="check-label">Adjusted timing on a Music Segment</span></label>
+    <label class="check-item" data-id="c06-alltracks"><div class="check-box"></div><span class="check-label">Updated timing in ALL highlighted tracks/segments</span></label>
+    <label class="check-item" data-id="c06-volume"><div class="check-box"></div><span class="check-label">Experimented with the volume graph (optional flex)</span></label>
+    <label class="check-item" data-id="c06-patch"><div class="check-box"></div><span class="check-label">Generated final patch and confirmed it works in-game</span></label>
+  </div>
+
+  <div class="card card-green" style="margin-top:2rem; text-align:center;">
+    <div class="page-tag" style="text-align:center; margin-bottom:0.5rem;">★ OPERATION COMPLETE</div>
+    <div style="font-family:var(--font-head); font-size:2rem; font-weight:900; color:var(--green); letter-spacing:0.05em;">YOU ARE A MODDER NOW</div>
+    <p style="color:var(--text2); margin-top:0.5rem;">Super Earth salutes your contribution. Eagle-1 may or may not be speaking in a different language now. For democracy.</p>
+  </div>
+
+  <div class="page-nav-footer">
+    <button class="page-nav-btn" onclick="showPage('music', document.querySelectorAll('.nav-btn')[5])">◂ CHAPTER 05</button>
+    <button class="page-nav-btn next" onclick="showPage('home', document.querySelectorAll('.nav-btn')[0])">▸ BACK TO HOME</button>
+  </div>
+</div>
+</div>
+
+<!-- ═══════════════════════════════════════════
+     JAVASCRIPT
+═══════════════════════════════════════════ -->
+<script>
+// ── PAGE NAVIGATION ──────────────────────────
+const pages = ['home','install','tools','basics','voice','music','advanced'];
+
+function showPage(id, clickedBtn) {
+  pages.forEach(p => {
+    document.getElementById('page-' + p).classList.remove('active');
+  });
+  document.getElementById('page-' + id).classList.add('active');
+
+  document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+  if (clickedBtn) clickedBtn.classList.add('active');
+
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+// ── THEME TOGGLE ─────────────────────────────
+function toggleTheme() {
+  const current = document.documentElement.getAttribute('data-theme');
+  const next = current === 'light' ? 'dark' : 'light';
+  document.documentElement.setAttribute('data-theme', next === 'dark' ? '' : 'light');
+  document.getElementById('theme-btn').textContent = next === 'light' ? '☾ DARK' : '☀ LIGHT';
+  localStorage.setItem('hd2-theme', next);
+}
+
+// ── PROGRESS TRACKER ─────────────────────────
+const checkItems = document.querySelectorAll('.check-item[data-id]');
+
+function updateProgress() {
+  const total = checkItems.length;
+  let done = 0;
+  checkItems.forEach(item => {
+    if (localStorage.getItem('hd2-check-' + item.dataset.id) === '1') done++;
+  });
+  const pct = total > 0 ? (done / total) * 100 : 0;
+  document.getElementById('progress-fill').style.width = pct + '%';
+  document.getElementById('progress-done').textContent = done;
+  document.getElementById('progress-total').textContent = total;
+}
+
+function applyCheckState(item) {
+  const val = localStorage.getItem('hd2-check-' + item.dataset.id);
+  if (val === '1') {
+    item.classList.add('checked');
+  } else {
+    item.classList.remove('checked');
+  }
+}
+
+checkItems.forEach(item => {
+  applyCheckState(item);
+  item.addEventListener('click', () => {
+    const isChecked = item.classList.contains('checked');
+    if (isChecked) {
+      localStorage.setItem('hd2-check-' + item.dataset.id, '0');
+      item.classList.remove('checked');
+    } else {
+      localStorage.setItem('hd2-check-' + item.dataset.id, '1');
+      item.classList.add('checked');
+    }
+    updateProgress();
+    buildGlobalChecklist();
+  });
+});
+updateProgress();
+
+// ── GLOBAL CHECKLIST ON HOME PAGE ────────────
+const chapterLabels = {
+  'c01': '01 — Installing Mods',
+  'c02': '02 — Tools Setup',
+  'c03': '03 — Mod Basics',
+  'c04': '04 — Voice & SFX',
+  'c05': '05 — Music Mods',
+  'c06': '06 — Advanced',
+};
+
+function buildGlobalChecklist() {
+  const container = document.getElementById('global-checklist');
+  if (!container) return;
+  container.innerHTML = '';
+
+  const groups = {};
+  checkItems.forEach(item => {
+    const prefix = item.dataset.id.split('-').slice(0,1)[0];
+    if (!groups[prefix]) groups[prefix] = [];
+    groups[prefix].push(item);
+  });
+
+  Object.entries(groups).forEach(([prefix, items]) => {
+    const div = document.createElement('div');
+    div.className = 'checklist';
+    div.style.marginBottom = '1rem';
+
+    const title = document.createElement('div');
+    title.className = 'checklist-title';
+    title.textContent = '✦ CHAPTER ' + (chapterLabels[prefix] || prefix).toUpperCase();
+    div.appendChild(title);
+
+    items.forEach(src => {
+      const clone = document.createElement('label');
+      clone.className = 'check-item' + (src.classList.contains('checked') ? ' checked' : '');
+      clone.dataset.globalId = src.dataset.id;
+      clone.innerHTML = `<div class="check-box"></div><span class="check-label">${src.querySelector('.check-label').textContent}</span>`;
+      clone.addEventListener('click', () => {
+        src.click();
+        buildGlobalChecklist();
+      });
+      div.appendChild(clone);
+    });
+
+    container.appendChild(div);
+  });
+}
+buildGlobalChecklist();
+
+// ── THEME INIT ───────────────────────────────
+(function() {
+  const saved = localStorage.getItem('hd2-theme');
+  if (saved === 'light') {
+    document.documentElement.setAttribute('data-theme', 'light');
+    document.getElementById('theme-btn').textContent = '☾ DARK';
+  }
+})();
+</script>
+</body>
+</html>
