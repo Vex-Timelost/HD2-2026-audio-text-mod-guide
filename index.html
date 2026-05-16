@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HD2 Mod Guide</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="main.js" defer></script>
+
+    /* NAV */
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+      padding: 0 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 56px;
+      box-shadow: var(--shadow);
+    }
+    .nav-logo {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.9rem;
+      font-weight: 500;
+      color: var(--accent);
+      letter-spacing: 0.04em;
+    }
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+      list-style: none;
+    }
+    .nav-links a {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      text-decoration: none;
+      font-weight: 500;
+      transition: color 0.15s;
+    }
+    .nav-links a:hover { color: var(--text); }
+    .theme-btn {
+      background: none;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 5px 10px;
+      cursor: pointer;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      font-family: 'DM Sans', sans-serif;
+      transition: all 0.15s;
+    }
+    .theme-btn:hover { border-color: var(--accent); color: var(--accent); }
+
+    /* HERO */
+    .hero {
+      padding: 5rem 2rem 3rem;
+      max-width: 760px;
+      margin: 0 auto;
+      border-bottom: 1px solid var(--border);
+    }
+    .hero-tag {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.75rem;
+      color: var(--accent);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-bottom: 1rem;
+    }
+    .hero h1 {
+      font-size: clamp(2rem, 5vw, 3.2rem);
+      font-weight: 600;
+      line-height: 1.15;
+      letter-spacing: -0.02em;
+      margin-bottom: 1rem;
+    }
+    .hero p {
+      font-size: 1.05rem;
+      color: var(--text-muted);
+      line-height: 1.7;
+      max-width: 560px;
+      font-weight: 300;
+    }
+
+    /* PROGRESS BAR */
+    .progress-bar-wrap {
+      max-width: 760px;
+      margin: 2rem auto 0;
+      padding: 0 2rem;
+    }
+    .progress-label {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.72rem;
+      color: var(--text-muted);
+      margin-bottom: 0.5rem;
+      display: flex;
+      justify-content: space-between;
+    }
+    .progress-track {
+      height: 3px;
+      background: var(--border);
+      border-radius: 99px;
+      overflow: hidden;
+    }
+    .progress-fill {
+      height: 100%;
+      background: var(--accent);
+      border-radius: 99px;
+      transition: width 0.4s ease;
+      width: 0%;
+    }
+
+    /* LAYOUT */
+    .container {
+      max-width: 760px;
+      margin: 0 auto;
+      padding: 3rem 2rem 6rem;
+    }
+
+    /* SECTION */
+    .section {
+      margin-bottom: 4rem;
+    }
+    .section-header {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      margin-bottom: 1.5rem;
+      padding-bottom: 1rem;
+      border-bottom: 1px solid var(--border);
+    }
+    .section-num {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.7rem;
+      color: var(--accent);
+      background: var(--accent-light);
+      padding: 3px 8px;
+      border-radius: 4px;
+      font-weight: 500;
+    }
+    .section-header h2 {
+      font-size: 1.3rem;
+      font-weight: 600;
+      letter-spacing: -0.01em;
+    }
+
+    /* STEPS */
+    .step {
+      display: flex;
+      gap: 1rem;
+      padding: 1rem 0;
+      border-bottom: 1px solid var(--border);
+      align-items: flex-start;
+      transition: opacity 0.2s;
+    }
+    .step:last-child { border-bottom: none; }
+    .step.done { opacity: 0.5; }
+    .step.done .step-title { text-decoration: line-through; }
+
+    .step-check {
+      flex-shrink: 0;
+      width: 20px;
+      height: 20px;
+      border: 1.5px solid var(--border);
+      border-radius: 5px;
+      cursor: pointer;
+      appearance: none;
+      -webkit-appearance: none;
+      background: var(--surface);
+      margin-top: 2px;
+      position: relative;
+      transition: all 0.15s;
+    }
+    .step-check:checked {
+      background: var(--accent);
+      border-color: var(--accent);
+    }
+    .step-check:checked::after {
+      content: '';
+      position: absolute;
+      left: 5px;
+      top: 2px;
+      width: 5px;
+      height: 9px;
+      border: 2px solid white;
+      border-top: none;
+      border-left: none;
+      transform: rotate(45deg);
+    }
+
+    .step-body { flex: 1; }
+    .step-title {
+      font-size: 0.95rem;
+      font-weight: 500;
+      margin-bottom: 0.3rem;
+    }
+    .step-desc {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      line-height: 1.6;
+      font-weight: 300;
+    }
+
+    /* CODE */
+    .code-block {
+      background: var(--code-bg);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1rem 1.2rem;
+      margin: 0.75rem 0;
+      font-family: 'DM Mono', monospace;
+      font-size: 0.8rem;
+      color: var(--text);
+      overflow-x: auto;
+      line-height: 1.6;
+    }
+    .code-label {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.7rem;
+      color: var(--text-muted);
+      margin-bottom: 0.3rem;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+
+    /* NOTE */
+    .note {
+      background: var(--accent-light);
+      border-left: 3px solid var(--accent);
+      border-radius: 0 var(--radius) var(--radius) 0;
+      padding: 0.75rem 1rem;
+      margin: 0.75rem 0;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      line-height: 1.6;
+    }
+    .note strong { color: var(--accent); }
+
+    /* LINK */
+    a.ext-link {
+      color: var(--accent);
+      text-decoration: none;
+      font-weight: 500;
+      border-bottom: 1px solid transparent;
+      transition: border-color 0.15s;
+    }
+    a.ext-link:hover { border-bottom-color: var(--accent); }
+
+    /* RESET BUTTON */
+    .reset-btn {
+      display: inline-block;
+      margin-top: 2rem;
+      background: none;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 8px 16px;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      cursor: pointer;
+      font-family: 'DM Sans', sans-serif;
+      transition: all 0.15s;
+    }
+    .reset-btn:hover { border-color: var(--accent); color: var(--accent); }
+  </style>
+</head>
+<body>
+
+<nav>
+  <span class="nav-logo">HD2 // MOD GUIDE</span>
+  <ul class="nav-links">
+    <li><a href="#install">Installing</a></li>
+    <li><a href="#audio">Audio Mods</a></li>
+    <li><a href="#text">Text Mods</a></li>
+    <li><button class="theme-btn" id="themeToggle">Dark</button></li>
+  </ul>
+</nav>
+
+<div class="hero">
+  <p class="hero-tag">Helldivers 2 · Community Guide</p>
+  <h1>How to Install & Create Mods</h1>
+  <p>A step-by-step guide covering how to install mods using Nexus Mods and Arsenal Mod Manager, as well as how to create your own audio and text mods for Helldivers 2.</p>
+</div>
+
+<div class="progress-bar-wrap">
+  <div class="progress-label">
+    <span>Your progress</span>
+    <span id="progressText">0 / 0 steps complete</span>
+  </div>
+  <div class="progress-track">
+    <div class="progress-fill" id="progressFill"></div>
+  </div>
+</div>
+
+<div class="container">
+
+  <!-- SECTION 1: INSTALLING MODS -->
+  <div class="section" id="install">
+    <div class="section-header">
+      <span class="section-num">01</span>
+      <h2>Installing Mods</h2>
+    </div>
+
+    <div class="step" id="step-s1">
+      <input type="checkbox" class="step-check" data-id="s1">
+      <div class="step-body">
+        <div class="step-title">Download Arsenal Mod Manager</div>
+        <div class="step-desc">
+          Get Arsenal Mod Manager from <a class="ext-link" href="https://www.nexusmods.com" target="_blank">Nexus Mods</a>. This is the tool you'll use to manage all your Helldivers 2 mods. Install it to a location outside your game folder.
+        </div>
+      </div>
+    </div>
+
+    <div class="step" id="step-s2">
+      <input type="checkbox" class="step-check" data-id="s2">
+      <div class="step-body">
+        <div class="step-title">Point Arsenal to your game folder</div>
+        <div class="step-desc">
+          Open Arsenal Mod Manager and set your Helldivers 2 game directory. It's usually located at:
+          <div class="code-label">default path</div>
+          <div class="code-block">C:\Program Files (x86)\Steam\steamapps\common\Helldivers 2</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="step" id="step-s3">
+      <input type="checkbox" class="step-check" data-id="s3">
+      <div class="step-body">
+        <div class="step-title">Browse and download a mod from Nexus</div>
+        <div class="step-desc">
+          Go to <a class="ext-link" href="https://www.nexusmods.com/helldivers2" target="_blank">nexusmods.com/helldivers2</a> and find a mod you want. Click "Mod Manager Download" — this will send it directly to Arsenal if it's set up correctly.
+          <div class="note"><strong>Tip:</strong> You need a free Nexus Mods account to download files.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="step" id="step-s4">
+      <input type="checkbox" class="step-check" data-id="s4">
+      <div class="step-body">
+        <div class="step-title">Enable the mod in Arsenal and launch</div>
+        <div class="step-desc">
+          In Arsenal, check the box next to the mod to enable it. Then launch the game through Arsenal (not Steam directly) to make sure the mods are loaded.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION 2: AUDIO MODS -->
+  <div class="section" id="audio">
+    <div class="section-header">
+      <span class="section-num">02</span>
+      <h2>Creating Audio Mods</h2>
+    </div>
+
+    <div class="note"><strong>Note:</strong> Audio mods replace in-game sounds with your own audio files. Common uses include custom weapon sounds, music, or voice lines.</div>
+
+    <div class="step" id="step-a1">
+      <input type="checkbox" class="step-check" data-id="a1">
+      <div class="step-body">
+        <div class="step-title">Find the audio file you want to replace</div>
+        <div class="step-desc">
+          Use a tool like <strong>HD2 Data Explorer</strong> to browse the game's packed files and locate the audio file you want to swap out. Audio files in HD2 are typically in <code>.wem</code> format.
+        </div>
+      </div>
+    </div>
+
+    <div class="step" id="step-a2">
+      <input type="checkbox" class="step-check" data-id="a2">
+      <div class="step-body">
+        <div class="step-title">Prepare your replacement audio</div>
+        <div class="step-desc">
+          Convert your audio file to the <code>.wem</code> format using <a class="ext-link" href="https://github.com/nicholasgasior/wwise-audio-tools" target="_blank">Wwise</a> or a WEM converter. Match the length and sample rate of the original when possible to avoid issues.
+          <div class="code-label">recommended format</div>
+          <div class="code-block">Format: .wem (Wwise Encoded Media)
+Sample rate: match original (usually 44100 Hz)
+Channels: match original (mono or stereo)</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="step" id="step-a3">
+      <input type="checkbox" class="step-check" data-id="a3">
+      <div class="step-body">
+        <div class="step-title">Rename your file to match the original</div>
+        <div class="step-desc">
+          The game loads audio by file ID. Rename your converted file to exactly match the original file's name/ID so the game picks it up as a replacement.
+        </div>
+      </div>
+    </div>
+
+    <div class="step" id="step-a4">
+      <input type="checkbox" class="step-check" data-id="a4">
+      <div class="step-body">
+        <div class="step-title">Package and load via Arsenal</div>
+        <div class="step-desc">
+          Place your file in the correct folder structure, zip it up, and import it into Arsenal Mod Manager. Enable it and test in-game.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION 3: TEXT MODS -->
+  <div class="section" id="text">
+    <div class="section-header">
+      <span class="section-num">03</span>
+      <h2>Creating Text Mods</h2>
+    </div>
+
+    <div class="note"><strong>Note:</strong> Text mods let you change in-game strings like item names, descriptions, UI labels, and mission text.</div>
+
+    <div class="step" id="step-t1">
+      <input type="checkbox" class="step-check" data-id="t1">
+      <div class="step-body">
+        <div class="step-title">Extract the game's text files</div>
+        <div class="step-desc">
+          Use HD2 Data Explorer to find and extract the localization files. These contain all in-game text and are usually stored in a structured format tied to the game's language settings.
+        </div>
+      </div>
+    </div>
+
+    <div class="step" id="step-t2">
+      <input type="checkbox" class="step-check" data-id="t2">
+      <div class="step-body">
+        <div class="step-title">Edit the text values</div>
+        <div class="step-desc">
+          Open the extracted file in a text editor. Find the string you want to change by searching for keywords. Edit only the value, not the key name.
+          <div class="code-label">example</div>
+          <div class="code-block"># Before
+"WEAPON_NAME_RAILGUN": "RS-422 Railgun"
+
+# After
+"WEAPON_NAME_RAILGUN": "Big Zapper 9000"</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="step" id="step-t3">
+      <input type="checkbox" class="step-check" data-id="t3">
+      <div class="step-body">
+        <div class="step-title">Repack and load via Arsenal</div>
+        <div class="step-desc">
+          Save your edited file, repack it into the correct format, and import it into Arsenal Mod Manager. Text mods are some of the safest mods to make since they don't affect gameplay logic.
+          <div class="note"><strong>Tip:</strong> Always keep a backup of the original file before editing.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <button class="reset-btn" id="resetBtn">Reset all progress</button>
+
+</div>
+
+<script>
+  // --- THEME ---
+  const themeBtn = document.getElementById('themeToggle');
+  const savedTheme = localStorage.getItem('hd2-theme') || 'light';
+  applyTheme(savedTheme);
+
+  themeBtn.addEventListener('click', () => {
+    const current = document.documentElement.getAttribute('data-theme') || 'light';
+    const next = current === 'dark' ? 'light' : 'dark';
+    applyTheme(next);
+    localStorage.setItem('hd2-theme', next);
+  });
+
+  function applyTheme(theme) {
+    document.documentElement.setAttribute('data-theme', theme);
+    themeBtn.textContent = theme === 'dark' ? 'Light' : 'Dark';
+  }
+
+  // --- PROGRESS TRACKER ---
+  const checkboxes = document.querySelectorAll('.step-check');
+  const saved = JSON.parse(localStorage.getItem('hd2-progress')) || [];
+
+  // Restore saved state
+  checkboxes.forEach(cb => {
+    if (saved.includes(cb.dataset.id)) {
+      cb.checked = true;
+      cb.closest('.step').classList.add('done');
+    }
+    cb.addEventListener('change', handleCheck);
+  });
+
+  updateProgress();
+
+  function handleCheck(e) {
+    const cb = e.target;
+    const step = cb.closest('.step');
+    step.classList.toggle('done', cb.checked);
+
+    let progress = JSON.parse(localStorage.getItem('hd2-progress')) || [];
+    if (cb.checked) {
+      if (!progress.includes(cb.dataset.id)) progress.push(cb.dataset.id);
+    } else {
+      progress = progress.filter(id => id !== cb.dataset.id);
+    }
+    localStorage.setItem('hd2-progress', JSON.stringify(progress));
+    updateProgress();
+  }
+
+  function updateProgress() {
+    const total = checkboxes.length;
+    const done = document.querySelectorAll('.step-check:checked').length;
+    const pct = total === 0 ? 0 : Math.round((done / total) * 100);
+    document.getElementById('progressFill').style.width = pct + '%';
+    document.getElementById('progressText').textContent = `${done} / ${total} steps complete`;
+  }
+
+  // --- RESET ---
+  document.getElementById('resetBtn').addEventListener('click', () => {
+    localStorage.removeItem('hd2-progress');
+    checkboxes.forEach(cb => {
+      cb.checked = false;
+      cb.closest('.step').classList.remove('done');
+    });
+    updateProgress();
+  });
+</script>
+</body>
+</html>
